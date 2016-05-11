@@ -8,6 +8,8 @@ public interface PinCodeService {
 
 	List<?> getPinCode(String searchKey);
 
-	String postComment(Post post);
+	void postComment(Post post);
+
+	List<?> getLocation(String searchKey);
 
 }

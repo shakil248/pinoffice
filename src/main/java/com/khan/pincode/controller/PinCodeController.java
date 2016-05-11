@@ -32,16 +32,24 @@ public class PinCodeController {
 		   
 	    }
 	 	
+	 	@RequestMapping(value = "/getlocation", method = RequestMethod.GET)
+	    public ResponseEntity<List<?>>  getLocation(@RequestParam String searchKey) {
+	 		pinCodeHitCount++;
+		 List<?> pinCodeList = pinCodeService.getLocation(searchKey);
+		 return new ResponseEntity<List<?>>(pinCodeList, HttpStatus.OK);
+		   
+	    }
+	 	
 	 	@RequestMapping(value = "/getPinCodeHitCount", method = RequestMethod.GET)
 	    public long  getPinCodeHitCount() {
 		 return pinCodeHitCount;
 		   
 	    }
 	 	
-	 	 @RequestMapping(value = "/postcomment", method = RequestMethod.GET)
-		    public @ResponseBody ResponseEntity<String> postComment(@RequestBody Post post) {
-			  String res= pinCodeService.postComment(post);
-			  return new ResponseEntity<String>(res,HttpStatus.OK);
-		    }
+	 	 @RequestMapping(value = "/postcomment", method = RequestMethod.POST)
+		    public @ResponseBody ResponseEntity<Void> postComment(@RequestBody Post post) {
+			  pinCodeService.postComment(post);
+			  return new ResponseEntity<Void>(HttpStatus.OK);
+		}
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.khan.pincode.dao.PinCodeDAO;
-import com.khan.pincode.model.A;
+import com.khan.pincode.model.PinCode;
 import com.khan.pincode.model.Post;
 import com.khan.pincode.util.CsvReaderUtil;
 
@@ -19,7 +19,7 @@ public class PinCodeServiceImpl implements PinCodeService {
 	@Autowired
 	private PinCodeDAO pinCodeDAO;
 	
-	List<A> pinCodeList = new ArrayList<A>();
+	List<PinCode> pinCodeList = new ArrayList<PinCode>();
 	
 	public PinCodeServiceImpl(){
 		pinCodeList = CsvReaderUtil.getPinCodeData();
@@ -28,14 +28,13 @@ public class PinCodeServiceImpl implements PinCodeService {
 	
 	
 	public List<?> getPinCode(String searchKey) {
-		List<A> selectedPinCodeList = new ArrayList<A>();;
+		List<PinCode> selectedPinCodeList = new ArrayList<PinCode>();;
 		if(null!=searchKey && searchKey!=""){
 			String titleSearchKey;
 			String capitalSearchKey = searchKey.toUpperCase();
 			Character firstC = searchKey.charAt(0);
 			titleSearchKey = Character.toUpperCase(firstC)+searchKey.substring(1);
-			selectedPinCodeList = new ArrayList<A>();
-			for(A a  :pinCodeList){
+			for(PinCode a  :pinCodeList){
 				if(a.getArea().startsWith(titleSearchKey) || a.getDistrict().startsWith(titleSearchKey)||a.getState().startsWith(capitalSearchKey)){
 					selectedPinCodeList.add(a);
 				}
@@ -45,7 +44,22 @@ public class PinCodeServiceImpl implements PinCodeService {
 	}
 
 	@Override
-	public String postComment(Post post) {
-		return pinCodeDAO.postComment(post);
+	public void postComment(Post post) {
+		 pinCodeDAO.postComment(post);
+	}
+
+
+
+	@Override
+	public List<?> getLocation(String searchKey) {
+		List<PinCode> selectedPinCodeList = new ArrayList<PinCode>();;
+		if(null!=searchKey && searchKey!=""){
+			for(PinCode a  :pinCodeList){
+				if(a.getPinCode().equals(searchKey)){
+					selectedPinCodeList.add(a);
+				}
+			}
+		}
+		return selectedPinCodeList;
 	}
 }

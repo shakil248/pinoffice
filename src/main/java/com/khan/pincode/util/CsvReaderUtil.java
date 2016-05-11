@@ -7,16 +7,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.khan.pincode.model.A;
+import com.khan.pincode.model.PinCode;
 
 public class CsvReaderUtil {
 	
-	public static List<A> getPinCodeData() {
+	public static List<PinCode> getPinCodeData() {
 		String csvFile = "d:/pincodedata.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
-		List<A> pinCodeList = new ArrayList<A>();
+		List<PinCode> pinCodeList = new ArrayList<PinCode>();
 
 		try {
 
@@ -24,7 +24,7 @@ public class CsvReaderUtil {
 			while ((line = br.readLine()) != null) {
 				String[] pinCodeArray = line.split(cvsSplitBy);
 				System.out.println(pinCodeArray[0]);
-				A a  = new A();
+				PinCode a  = new PinCode();
 				a.setArea(pinCodeArray[0]);
 				a.setPinCode(pinCodeArray[1]);
 				a.setDistrict(pinCodeArray[2]);
